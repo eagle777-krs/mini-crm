@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Форма клиента{% endblock %}
+{% block content %}
+<h1>{{ submit_text }} клиента</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div style="margin-bottom: 20px;"><label>{{ form.name.label }}</label><br>{{ form.name(class="input-field") }}</div>
+    <div style="margin-bottom: 20px;"><label>{{ form.email.label }}</label><br>{{ form.email(class="input-field") }}</div>
+    <div style="margin-bottom: 30px;"><label>{{ form.phone_number.label }}</label><br>{{ form.phone_number(class="input-field") }}</div>
+    <button type="submit">{{ submit_text }}</button>
+</form>
+<a href="{{ url_for('main.clients') }}" class="btn" style="margin-top: 30px;">← Назад</a>
+{% endblock %}

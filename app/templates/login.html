@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<h1>🔐 Вход в систему</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div>
+        <label>{{ form.username.label }}</label><br>
+        {{ form.username(class="input-field") }}
+    </div>
+    <div style="margin-top: 20px;">
+        <label>{{ form.password.label }}</label><br>
+        {{ form.password(class="input-field") }}
+    </div>
+    <div style="margin-top: 30px;">
+        <button type="submit">Войти</button>
+    </div>
+</form>
+<p style="margin-top: 30px;">Нет аккаунта? <a href="{{ url_for('main.register') }}">Зарегистрируйтесь</a></p>
+{% endblock %}

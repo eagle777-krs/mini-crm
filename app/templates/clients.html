@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Клиенты{% endblock %}
+{% block content %}
+<h1>👥 Список клиентов</h1>
+<a href="{{ url_for('main.add_client_page', id=0) }}" class="btn">➕ Добавить клиента</a>
+{% if clients %}<table class="data-table">
+<thead><tr><th>ID</th><th>Имя</th><th>Email</th><th>Телефон</th><th>Выручка</th><th>Действия</th></tr></thead>
+<tbody>{% for client in clients %}<tr>
+<td>{{ client.id }}</td>
+<td>{{ client.name }}</td>
+<td>{{ client.email }}</td>
+<td>{{ client.phone_number or '—' }}</td>
+<td>{{ client.sales_volume or 0 }} ₽</td>
+<td><a href="{{ url_for('main.client_page', id=client.id) }}">🔍</a> <a href="{{ url_for('main.update_client_page', id=client.id) }}">✏️</a>
+<form method="POST" action="{{ url_for('main.delete_client_page', id=client.id) }}" style="display:inline;" onsubmit="return confirm('Удалить клиента?');">
+<button type="submit" class="btn" style="padding:2px 8px; font-size:0.9em;">🗑️</button></form></td>
+</tr>{% endfor %}</tbody></table>
+{% else %}<p>Пока нет клиентов.</p>{% endif %}
+{% endblock %}

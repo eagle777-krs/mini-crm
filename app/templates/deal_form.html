@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}{{ submit_text }} сделку{% endblock %}
+{% block content %}
+<h1>{{ submit_text }} сделку</h1>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div style="margin-bottom:20px;"><label>{{ form.client_id.label }}</label><br>{{ form.client_id(class="input-field") }}</div>
+    <div style="margin-bottom:20px;"><label>{{ form.amount.label }}</label><br>{{ form.amount(class="input-field") }}</div>
+    <div style="margin-bottom:20px;"><label>{{ form.status.label }}</label><br>{{ form.status(class="input-field") }}</div>
+    <div style="margin-bottom:20px;"><label>{{ form.description.label }}</label><br>{{ form.description(class="input-field") }}</div>
+    <div style="margin-bottom:20px;"><label>{{ form.date_start.label }}</label><br>{{ form.date_start(class="input-field") }}</div>
+    <div style="margin-bottom:30px;"><label>{{ form.date_close.label }}</label><br>{{ form.date_close(class="input-field") }}</div>
+    <button type="submit">{{ submit_text }}</button>
+</form>
+<a href="{{ url_for('main.deals') }}" class="btn" style="margin-top: 30px;">← Назад</a>
+{% endblock %}

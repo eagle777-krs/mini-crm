@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Карточка клиента{% endblock %}
+{% block content %}
+<h1>🧾 Карточка клиента</h1>
+<ul style="text-align:left;">
+<li><b>ID:</b> {{ client_info.id }}</li>
+<li><b>Имя:</b> {{ client_info.name }}</li>
+<li><b>Email:</b> {{ client_info.email }}</li>
+<li><b>Телефон:</b> {{ client_info.phone_number or '—' }}</li>
+<li><b>Выручка:</b> {{ client_info.sales_volume or 0 }} ₽</li>
+</ul>
+<a href="{{ url_for('main.update_client_page', id=client_info.id) }}" class="btn">✏️ Редактировать</a>
+<form method="POST" action="{{ url_for('main.delete_client_page', id=client_info.id) }}" style="display:inline;" onsubmit="return confirm('Удалить клиента?');">
+<button type="submit" class="btn">🗑️ Удалить</button></form>
+<h2>💼 Сделки клиента</h2>
+{% if client_info.deals %}<table class="data-table">
+<thead><tr><th>ID</th><th>Менеджер</th><th>Сумма</th><th>Статус</th><th>Начало</th><th>Закрытие</th></tr></thead>
+<tbody>{% for deal in client_info.deals %}<tr>
+<td>{{ deal.id }}</td>
+<td>{{ deal.salesman.username }}</td>
+<td>{{ deal.amount }} ₽</td>
+<td>{{ deal.status.value }}</td>
+<td>{{ deal.date_start.strftime('%Y-%m-%d') }}</td>
+<td>{% if deal.date_close %}{{ deal.date_close.strftime('%Y-%m-%d') }}{% else %}—{% endif %}</td>
+</tr>{% endfor %}</tbody></table>
+{% else %}<p>Сделок пока нет.</p>{% endif %}
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Аналитика{% endblock %}
+{% block head %}<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>{% endblock %}
+{% block content %}
+<h1>📊 Общая аналитика</h1>
+<ul>
+  <li><b>Общая выручка:</b> {{ total_revenue }} ₽</li>
+  <li><b>Средняя сделка:</b> {{ avg_deal|round(2) }} ₽</li>
+  <li><b>Клиентов:</b> {{ total_clients }}</li>
+  <li><b>Сделок:</b> {{ total_deals }}</li>
+</ul>
+<h2>🏆 Топ-5 клиентов</h2>
+<ol>{% for name, total in top_clients %}<li>{{ name }} — {{ total|round(2) }} ₽</li>{% endfor %}</ol>
+<h2>📈 Сделки по месяцам</h2>
+<canvas id="dealsChart" width="600" height="300"></canvas>
+<script>
+const ctx = document.getElementById('dealsChart').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ month_labels|tojson }},
+        datasets: [{
+            label: 'Сумма сделок по месяцам',
+            data: {{ month_values|tojson }},
+            backgroundColor: 'rgba(255,255,255,0.9)',
+            borderColor: 'rgba(255,255,255,1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        plugins: { legend: { labels: { color: '#fff' } } },
+        scales: {
+            x: { ticks: { color: '#ccc' } },
+            y: { ticks: { color: '#ccc', callback: val => val + ' ₽' }, beginAtZero: true }
+        }
+    }
+});
+</script>
+{% endblock %}

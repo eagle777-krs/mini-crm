@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<h1>🏠 Главная страница</h1>
+<h2>🔥 Топ-10 сделок</h2>
+{% if deals %}
+<table class="data-table">
+<thead><tr><th>ID</th><th>Клиент</th><th>Менеджер</th><th>Сумма</th><th>Статус</th></tr></thead>
+<tbody>{% for deal in deals %}<tr>
+<td>{{ deal.id }}</td>
+<td>{{ deal.client.name }}</td>
+<td>{{ deal.salesman.username }}</td>
+<td>{{ deal.amount }}</td>
+<td>{{ deal.status.value }}</td>
+</tr>{% endfor %}</tbody></table>
+{% else %}<p>Сделок пока нет.</p>{% endif %}
+{% endblock %}

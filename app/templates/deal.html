@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Сделка #{{ deal.id }}{% endblock %}
+{% block content %}
+<h1>📄 Сделка #{{ deal.id }}</h1>
+<ul style="text-align:left;">
+<li><b>Клиент:</b> {{ deal.client.name }}</li>
+<li><b>Менеджер:</b> {{ deal.salesman.username }}</li>
+<li><b>Сумма:</b> {{ deal.amount }} ₽</li>
+<li><b>Статус:</b> {{ deal.status.value }}</li>
+<li><b>Описание:</b> {{ deal.description or '—' }}</li>
+<li><b>Дата начала:</b> {{ deal.date_start.strftime('%Y-%m-%d') }}</li>
+<li><b>Дата закрытия:</b> {% if deal.date_close %}{{ deal.date_close.strftime('%Y-%m-%d') }}{% else %}—{% endif %}</li>
+</ul>
+<a href="{{ url_for('main.update_deal_page', id=deal.id) }}" class="btn">✏️ Редактировать</a>
+<form method="POST" action="{{ url_for('main.delete_deal_page', id=deal.id) }}" style="display:inline;" onsubmit="return confirm('Удалить сделку?');">
+<button type="submit" class="btn">🗑️ Удалить</button></form>
+{% endblock %}

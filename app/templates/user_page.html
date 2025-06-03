@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Профиль{% endblock %}
+{% block content %}
+<h1>👤 Профиль пользователя</h1>
+<ul style="text-align:left;">
+  <li><b>ID:</b> {{ user.id }}</li>
+  <li><b>Имя пользователя:</b> {{ user.username }}</li>
+  <li><b>Email:</b> {{ user.email }}</li>
+  <li><b>Суммарная выручка:</b> {{ user.sales_volume or 0 }} ₽</li>
+</ul>
+<h2>💼 Сделки пользователя</h2>
+{% if user_deals %}<table class="data-table">
+<thead><tr><th>ID</th><th>Клиент</th><th>Сумма</th><th>Статус</th><th>Начало</th><th>Закрытие</th></tr></thead>
+<tbody>{% for deal in user_deals %}<tr>
+<td>{{ deal.id }}</td>
+<td>{{ deal.client.name }}</td>
+<td>{{ deal.amount }} ₽</td>
+<td>{{ deal.status.value }}</td>
+<td>{{ deal.date_start.strftime('%Y-%m-%d') }}</td>
+<td>{% if deal.date_close %}{{ deal.date_close.strftime('%Y-%m-%d') }}{% else %}—{% endif %}</td>
+</tr>{% endfor %}</tbody></table>
+{% else %}<p>Нет сделок.</p>{% endif %}
+{% endblock %}
