@@ -3,14 +3,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 from flask_login import LoginManager
 from config import Config
-from models import User
+from flask_migrate import Migrate
 
+migrate = Migrate()
 db = SQLAlchemy()
 csrf = CSRFProtect()
 login_manager = LoginManager()
 
 def create_app():
-
     app = Flask(__name__)
     app.config.from_object(Config)
 
@@ -18,7 +18,11 @@ def create_app():
     csrf.init_app(app)
     login_manager.init_app(app)
     login_manager.login_view = 'login'
+    migrate.init_app(app, db)
 
+    from app.models import User
+
+    @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
 
@@ -26,4 +30,3 @@ def create_app():
     app.register_blueprint(main_blueprint)
 
     return app
-

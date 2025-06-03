@@ -1,5 +1,5 @@
-from forms import LoginForm, RegisterForm, UserForm, ClientForm, DealForm
-from flask import Blueprint, render_template, redirect, url_for, flash, get_or_404
+from .forms import LoginForm, RegisterForm, UserForm, ClientForm, DealForm
+from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from .models import User, Client, Deal, db
 from sqlalchemy import func, extract
@@ -82,7 +82,7 @@ def add_client_page(id):
 @main.route('/client_page/edit/<id>', methods=['GET', 'POST'])
 @login_required
 def update_client_page(id):
-    client = Client.get_or_404(id)
+    client = Client.query.get(id)
     form = ClientForm(obj=client)
 
     if form.validate_on_submit():
@@ -95,7 +95,7 @@ def update_client_page(id):
 @main.route('/client_page/delete/<id>', methods=['POST'])
 @login_required
 def delete_client_page(id):
-    client = Client.get_or_404(id)
+    client = Client.query.get(id)
     db.session.delete(client)
     db.commit()
     flash('Клиент был удалён')
@@ -136,7 +136,7 @@ def deal_page(id):
 @main.route('/deal_page/edit/<id>', methods=['GET', 'POST'])
 @login_required
 def update_deal_page(id):
-    deal = Deal.query.get_or_404(id)
+    deal = Deal.query.get(id)
     form = DealForm(obj=deal)
 
     if form.validate_on_submit():
@@ -150,7 +150,7 @@ def update_deal_page(id):
 @main.route('/deal_page/delete/<id>', methods=['GET', 'POST'])
 @login_required
 def delete_deal_page(id):
-    deal = Deal.query.get_or_404(id)
+    deal = Deal.query.get(id)
     db.session.delete(deal)
     db.session.commit()
     flash('Сделка удалена', 'success')
