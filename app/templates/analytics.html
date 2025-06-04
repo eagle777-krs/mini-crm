@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+<div style="text-align: right; margin-top: 20px">
+  <a href="{{ url_for('main.user_page', id=current_user.id) }}" class="custom-link">В профиль</a>
+</div>
 {% block title %}Аналитика{% endblock %}
 {% block head %}<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>{% endblock %}
 {% block content %}

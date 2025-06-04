@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Главная{% endblock %}
 {% block content %}
+<div style="text-align: center; margin-top: 20px;">
+  <a href="{{ url_for('main.login') }}" class="custom-link">Войти</a> |
+  <a href="{{ url_for('main.register') }}" class="custom-link">Регистрация</a>
+</div>
 <h1>🏠 Главная страница</h1>
 <h2>🔥 Топ-10 сделок</h2>
 {% if deals %}

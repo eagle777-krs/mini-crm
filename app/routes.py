@@ -1,3 +1,5 @@
+from crypt import methods
+
 from .forms import LoginForm, RegisterForm, UserForm, ClientForm, DealForm
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
@@ -30,6 +32,13 @@ def register():
         flash('Пользователь создан! Войдите в систему.', 'success')
         return redirect(url_for('main.login'))
     return render_template('register.html', form=form)
+
+@main.route('/logout', methods=['POST'])
+@login_required
+def logout():
+    logout_user()
+    flash('Вы вышли из системы')
+    return redirect(url_for('main.index'))
 
 @main.route('/')
 def index():
@@ -67,7 +76,7 @@ def client_page(id):
 
 @main.route('/client_page/add', methods=['GET', 'POST'])
 @login_required
-def add_client_page(id):
+def add_client_page():
     form = ClientForm()
 
     if form.validate_on_submit():
@@ -112,7 +121,7 @@ def deals():
 
 @main.route('/deal_page/add', methods=['GET', 'POST'])
 @login_required
-def add_deal_page(id):
+def add_deal_page():
     form = DealForm()
 
     if form.validate_on_submit():

@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block title %}Профиль{% endblock %}
 {% block content %}
+<div style="text-align: right; margin-top: 20px">
+  <a href="{{ url_for('main.logout') }}" class="custom-link">Выйти из профиля</a>
+</div>
 <h1>👤 Профиль пользователя</h1>
 <ul style="text-align:left;">
   <li><b>ID:</b> {{ user.id }}</li>
@@ -8,6 +11,9 @@
   <li><b>Email:</b> {{ user.email }}</li>
   <li><b>Суммарная выручка:</b> {{ user.sales_volume or 0 }} ₽</li>
 </ul>
+<div style="text-align: centre">
+  <a href="{{ url_for('main.add_deal_page') }}" class="custom-link">Создать сделку</a>
+</div>
 <h2>💼 Сделки пользователя</h2>
 {% if user_deals %}<table class="data-table">
 <thead><tr><th>ID</th><th>Клиент</th><th>Сумма</th><th>Статус</th><th>Начало</th><th>Закрытие</th></tr></thead>

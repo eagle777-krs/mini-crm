@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, DecimalField, SelectField, TextAreaField, DateField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, Length, Email, Optional
 from datetime import date
+from app.models import DealType
 
 class LoginForm(FlaskForm):
     username = StringField('Имя пользователя', validators=[DataRequired(), Length(max=50)])
@@ -29,6 +30,10 @@ class ClientForm(FlaskForm):
 class DealForm(FlaskForm):
     client_id = SelectField('Клиент', coerce=int, validators=[DataRequired()])
     amount = DecimalField('Сумма сделки', places=2, validators=[DataRequired()])
+    status = SelectField('Статус сделки', choices=[(choice.name, choice.value) for choice in DealType],
+    validators=[DataRequired()]
+)
     description = TextAreaField('Описание', validators=[Optional(), Length(max=255)])
     date_start = DateField('Дата начала', default=date.today, validators=[DataRequired()])
+    date_close = DateField('Дата закрытия', validators=[Optional()])
     submit = SubmitField('Сохранить сделку')

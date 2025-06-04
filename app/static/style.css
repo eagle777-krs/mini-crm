@@ -128,3 +128,17 @@ a.btn {
     text-decoration: none;
     margin-top: 10px;
 }
+
+a.custom-link,
+a.custom-link:visited {
+  color: white;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a.custom-link:hover,
+a.custom-link:active,
+a.custom-link:focus {
+  color: red;
+  outline: none;
+}
