@@ -1,0 +1,20 @@
+[project]
+name = "mini-crm"
+version = "0.1.0"
+description = "Mini-CRM"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["gendiff"]
+
+[project.scripts]
+gendiff = "gendiff.scripts.main:main"
+
+[project.optional-dependencies]
+dev = ["pytest","pytest-cov", "ruff"]
