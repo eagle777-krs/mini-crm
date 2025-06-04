@@ -12,6 +12,10 @@
   <li><b>Суммарная выручка:</b> {{ user.sales_volume or 0 }} ₽</li>
 </ul>
 <div style="text-align: centre">
+  <a href="{{ url_for('main.add_client_page') }}" class="custom-link">Добавить клиента</a>
+</div>
+<p></p>
+<div style="text-align: centre">
   <a href="{{ url_for('main.add_deal_page') }}" class="custom-link">Создать сделку</a>
 </div>
 <h2>💼 Сделки пользователя</h2>
