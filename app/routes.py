@@ -128,10 +128,13 @@ def deals():
 @login_required
 def add_deal_page():
     form = DealForm()
+    form.client_id.choices = [(client.id, client.name) for client in Client.query.all()]
 
     if form.validate_on_submit():
         new_deal = Deal()
         form.populate_obj(new_deal)
+        new_deal.user_id = current_user.id
+        new_deal.amount = float(new_deal.amount)
         db.session.add(new_deal)
         db.session.commit()
         flash('Сделка добавлен')
@@ -152,12 +155,13 @@ def deal_page(id):
 def update_deal_page(id):
     deal = Deal.query.get(id)
     form = DealForm(obj=deal)
+    form.client_id.choices = [(client.id, client.name) for client in Client.query.all()]
 
     if form.validate_on_submit():
         form.populate_obj(deal)
         db.session.commit()
         flash('Сделка обновлена', 'success')
-        return redirect(url_for('deal_page', id=deal.id))
+        return redirect(url_for('main.deal_page', id=deal.id))
 
     return render_template('deal_form.html', form=form, submit_text='Сохранить изменения')
 

@@ -12,6 +12,12 @@
   <li><b>Суммарная выручка:</b> {{ user.sales_volume or 0 }} ₽</li>
 </ul>
 <div style="text-align: centre">
+  <a href="{{ url_for('main.analytics') }}" class="custom-link">Аналитика</a>
+</div>
+<div style="text-align: centre">
+  <a href="{{ url_for('main.clients') }}" class="custom-link">Клиенты</a>
+</div>
+<div style="text-align: centre">
   <a href="{{ url_for('main.add_client_page') }}" class="custom-link">Добавить клиента</a>
 </div>
 <p></p>

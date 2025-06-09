@@ -30,7 +30,7 @@ class ClientForm(FlaskForm):
 class DealForm(FlaskForm):
     client_id = SelectField('Клиент', coerce=int, validators=[DataRequired()])
     amount = DecimalField('Сумма сделки', places=2, validators=[DataRequired()])
-    status = SelectField('Статус сделки', choices=[(choice.name, choice.value) for choice in DealType],
+    status = SelectField('Статус сделки', choices=[(choice.value, choice.name) for choice in DealType],
     validators=[DataRequired()]
 )
     description = TextAreaField('Описание', validators=[Optional(), Length(max=255)])
