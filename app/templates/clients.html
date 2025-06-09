@@ -15,8 +15,9 @@
 <td>{{ client.phone_number or '—' }}</td>
 <td>{{ client.sales_volume or 0 }} ₽</td>
 <td><a href="{{ url_for('main.client_page', id=client.id) }}">🔍</a> <a href="{{ url_for('main.update_client_page', id=client.id) }}">✏️</a>
-<form method="POST" action="{{ url_for('main.delete_client_page', id=client.id) }}" style="display:inline;" onsubmit="return confirm('Удалить клиента?');">
+<form method="GET" action="{{ url_for('main.delete_client_page', id=client.id) }}" style="display:inline;" onsubmit="return confirm('Удалить клиента?');">
 <button type="submit" class="btn" style="padding:2px 8px; font-size:0.9em;">🗑️</button></form></td>
 </tr>{% endfor %}</tbody></table>
 {% else %}<p>Пока нет клиентов.</p>{% endif %}
+<a href="{{ url_for('main.deals') }}" class="btn" style="margin-top: 30px;">К сделкам</a>
 {% endblock %}

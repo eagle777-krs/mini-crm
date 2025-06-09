@@ -30,7 +30,7 @@ class Client(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(200), unique=True, nullable=False)
-    phone_number = db.Column(db.String(12), unique=True)
+    phone_number = db.Column(db.String(12))
     sales_volume = db.Column(db.Numeric(precision=10, scale=2))
 
     deals = db.relationship('Deal', backref='client', lazy=True)

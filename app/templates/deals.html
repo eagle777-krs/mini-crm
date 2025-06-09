@@ -17,8 +17,9 @@
 <td>{{ deal.date_start.strftime('%Y-%m-%d') }}</td>
 <td>{% if deal.date_close %}{{ deal.date_close.strftime('%Y-%m-%d') }}{% else %}—{% endif %}</td>
 <td><a href="{{ url_for('main.deal_page', id=deal.id) }}">🔍</a> <a href="{{ url_for('main.update_deal_page', id=deal.id) }}">✏️</a>
-<form method="POST" action="{{ url_for('main.delete_deal_page', id=deal.id) }}" style="display:inline;" onsubmit="return confirm('Удалить сделку?');">
+<form method="GET" action="{{ url_for('main.delete_deal_page', id=deal.id) }}" style="display:inline;" onsubmit="return confirm('Удалить сделку?');">
 <button type="submit" class="btn" style="padding:2px 8px; font-size:0.9em;">🗑️</button></form></td>
 </tr>{% endfor %}</tbody></table>
 {% else %}<p>Сделок пока нет.</p>{% endif %}
+<a href="{{ url_for('main.clients') }}" class="btn" style="margin-top: 30px;">К клиентам</a>
 {% endblock %}

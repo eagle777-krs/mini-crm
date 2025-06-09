@@ -12,6 +12,7 @@
 <li><b>Дата закрытия:</b> {% if deal.date_close %}{{ deal.date_close.strftime('%Y-%m-%d') }}{% else %}—{% endif %}</li>
 </ul>
 <a href="{{ url_for('main.update_deal_page', id=deal.id) }}" class="btn">✏️ Редактировать</a>
-<form method="POST" action="{{ url_for('main.delete_deal_page', id=deal.id) }}" style="display:inline;" onsubmit="return confirm('Удалить сделку?');">
+<form method="GET" action="{{ url_for('main.delete_deal_page', id=deal.id) }}" style="display:inline;" onsubmit="return confirm('Удалить сделку?');">
 <button type="submit" class="btn">🗑️ Удалить</button></form>
+<a href="{{ url_for('main.deals') }}" class="btn" style="margin-top: 30px;">← Назад</a>
 {% endblock %}

@@ -13,7 +13,7 @@
 <li><b>Выручка:</b> {{ client_info.sales_volume or 0 }} ₽</li>
 </ul>
 <a href="{{ url_for('main.update_client_page', id=client_info.id) }}" class="btn">✏️ Редактировать</a>
-<form method="POST" action="{{ url_for('main.delete_client_page', id=client_info.id) }}" style="display:inline;" onsubmit="return confirm('Удалить клиента?');">
+<form method="GET" action="{{ url_for('main.delete_client_page', id=client_info.id) }}" style="display:inline;" onsubmit="return confirm('Удалить клиента?');">
 <button type="submit" class="btn">🗑️ Удалить</button></form>
 <h2>💼 Сделки клиента</h2>
 {% if client_info.deals %}<table class="data-table">
@@ -27,4 +27,5 @@
 <td>{% if deal.date_close %}{{ deal.date_close.strftime('%Y-%m-%d') }}{% else %}—{% endif %}</td>
 </tr>{% endfor %}</tbody></table>
 {% else %}<p>Сделок пока нет.</p>{% endif %}
+<a href="{{ url_for('main.clients') }}" class="btn" style="margin-top: 30px;">К клиентам</a>
 {% endblock %}

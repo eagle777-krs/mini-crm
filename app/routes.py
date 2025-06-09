@@ -1,7 +1,7 @@
 from crypt import methods
 
 from .forms import LoginForm, RegisterForm, UserForm, ClientForm, DealForm
-from flask import Blueprint, render_template, redirect, url_for, flash
+from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_user, logout_user, current_user, login_required
 from .models import User, Client, Deal, db
 from sqlalchemy import func, extract
@@ -82,6 +82,8 @@ def add_client_page():
     if form.validate_on_submit():
         new_client = Client()
         form.populate_obj(new_client)
+        new_client.user_id = current_user.id
+        new_client.sales_volume = 0
         db.session.add(new_client)
         db.session.commit()
         flash('Клиент добавлен')
@@ -101,14 +103,17 @@ def update_client_page(id):
         return redirect(url_for('main.client_page', id=client.id))
     return render_template('client_form.html', form=form, submit_text='Сохранить')
 
-@main.route('/client_page/delete/<id>', methods=['POST'])
+@main.route('/client_page/delete/<id>', methods=['GET', 'POST'])
 @login_required
 def delete_client_page(id):
-    client = Client.query.get(id)
-    db.session.delete(client)
-    db.commit()
-    flash('Клиент был удалён')
-    return redirect(url_for('main.clients'))
+    if request.method == 'POST':
+        client = Client.query.get(id)
+        db.session.delete(client)
+        db.commit()
+        flash('Клиент был удалён')
+        return redirect(url_for('main.clients'))
+    else:
+        return render_template('delete.html')
 
 @main.route('/deals', methods=['GET'])
 @login_required
@@ -159,11 +164,14 @@ def update_deal_page(id):
 @main.route('/deal_page/delete/<id>', methods=['GET', 'POST'])
 @login_required
 def delete_deal_page(id):
-    deal = Deal.query.get(id)
-    db.session.delete(deal)
-    db.session.commit()
-    flash('Сделка удалена', 'success')
-    return redirect(url_for('deals'))
+    if request.method == 'POST':
+        deal = Deal.query.get(id)
+        db.session.delete(deal)
+        db.session.commit()
+        flash('Сделка удалена', 'success')
+        return redirect(url_for('deals'))
+    else:
+        return render_template('delete.html')
 
 @main.route('/analytics', methods=['GET'])
 @login_required
